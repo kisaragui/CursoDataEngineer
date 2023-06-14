@@ -15,7 +15,7 @@ Una vez clonado el repositorio, se debe tener en cuenta lo siguiente:
   El Archivo ".env_template", es una plantilla de como deberia estar formado el archivo .env.
   Es posible modificarlo, sustituir los valores correspondiente de cada variable y cambiarle el nombre a ".env".
   
-  ![Estructura del archivo .env](/images/Captura_env.jpg)
+  ![Estructura del archivo .env](images/Captura_env.jpg)
   
   
 
