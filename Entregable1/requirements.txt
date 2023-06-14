@@ -1,4 +1,6 @@
 dotenv
 requests
 sqlalchemy
+sqlalchemy-redshift
+redshift_connector
 pandas
