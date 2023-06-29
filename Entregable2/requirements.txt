@@ -1,0 +1,6 @@
+dotenv
+requests
+sqlalchemy
+pandas
+psycopg2
+pytz
