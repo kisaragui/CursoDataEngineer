@@ -1,5 +1,11 @@
 # Primer Entregable
 
+Actualización:
+Aplicado los cambios de la devolución:
+
+- Agregado distkey en la codigo de la tabla.
+- Refactorizado logica de transformanciones y limpieza del dataframe.
+
 Se uso la api newsapi.org como requerimiento para desarrollo del entregable. 
 A continuacion esta el enlace de la pagina:
 
