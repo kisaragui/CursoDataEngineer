@@ -36,12 +36,11 @@ class Articles ():
         
         try: 
             result = response.json()
-            
+
             if result["status"] == "ok" and result["totalResults"] > 0: 
                 
                 print("Cantidad de Articulos obtenidos: {}".format(result["totalResults"]))
-                result = result["articles"]
-                
+                result = {"result": result["articles"]}
                 
             elif result["status"] == "ok" and result["totalResults"] == 0:
                 print("No se encontraron Articulos")    
@@ -55,7 +54,7 @@ class Articles ():
         return result
 
 
-    def normalize_data(self, data: list):
+    def normalize_data(self, data: dict):
 
         """
             Funcion que aplica el tratamiento corresponde en la informacion y 
@@ -71,32 +70,18 @@ class Articles ():
             df:  Contenido los datos normalizados en dataframe
         """
 
-        data_list = []
-
         if data: 
             
             print("Aplicando transformaciones y ajustes...")
             
-            for index, row in enumerate(data):
-
-                template = {
-                    "id":int(index +1),
-                    "idSource": row["source"]["id"],
-                    "name": row["source"]["name"],
-                    "author": row["author"],
-                    "title": row["title"],
-                    "description": row["description"],
-                    "url": row["url"],
-                    "urlToImage": row["urlToImage"],
-                    "publishedAt": row["publishedAt"].rsplit('T', 1)[0],
-                    "content": row["content"]
-                }
-                
-                data_list.append(template)
-
-            df = pd.DataFrame(data_list)
-            df["publishedAt"] =pd.to_datetime(df["publishedAt"]) 
-        
+            temp = pd.DataFrame(data["result"])
+            df_sourse = temp.from_records(temp["source"])
+            temp["publishedAt"] = temp["publishedAt"].apply(lambda x : x.rsplit('T', 1)[0]) 
+            temp.insert(0,"id", temp.reset_index().index +1)
+            temp.insert(1,"idSource", df_sourse["id"])
+            temp.insert(2,"name", df_sourse["name"])
+            df = temp.drop(columns="source")
+            
         else:
             print("No se pasaron los articulos...")
             

@@ -2,7 +2,8 @@ import os
 from dotenv import load_dotenv
 from utils.dbHandlers import Redshift_Handler
 from utils.dataHandlers import Articles
-from utils.pathManager import PathDir
+
+
 # Configuraciones y variables 
 load_dotenv()
 

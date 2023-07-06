@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS njesusas_coderhouse.ARTICLES(
-    id integer PRIMARY KEY,
+    id integer,
     idSource varchar(25),
     name varchar(25),
     author varchar(50),
@@ -9,4 +9,5 @@ CREATE TABLE IF NOT EXISTS njesusas_coderhouse.ARTICLES(
     urlToImage varchar(1500),
     publishedAt DATE,
     content varchar(1500)
-) SORTKEY(publishedAt);
+) DISTKEY(publishedAt)
+SORTKEY(publishedAt);
