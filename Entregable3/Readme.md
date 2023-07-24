@@ -3,7 +3,7 @@
 # Actualización:
 Se Aplicaron los cambios de la devolución:
 
--Se modifico la logica de los task para guardar la informacion procesaba en archivos en formato json y csv.
+- Se modifico la logica de los task para guardar la informacion procesaba en archivos en formato json y csv.
 
 - Se Refactorizaron los task para pasar la ruta y el nombre del archivo con la informacion de los articulos.
 
