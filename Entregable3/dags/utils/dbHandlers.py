@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 from utils.pathManager import PathDir
 from psycopg2.extras import execute_values
 from airflow.providers.postgres.hooks.postgres import PostgresHook
@@ -144,16 +145,16 @@ class Redshift_Handler():
         return message            
                 
                 
-    def write_df(self, df: "pd.DataFrame", engine: object):
+    def write_df(self, file_name: str, engine: object):
         
         """
-            Funcion que se encarga de guardar el contenido del dataframe a la tabla  
+            Funcion que se encarga de guardar el contenido del archivo en formato csv a la tabla  
             en redshift, consulta primero si ya estan insertado y guarda los que no existe.
         
             Parameters
             ----------
-                df (Dataframe): Obligatorio.
-                    Dataframe que contiene los articulos a insertar en la tabla.
+                file_name (str): Obligatorio.
+                    Directorio del archivo en formato csv con los articulos encontrados a insertar en la tabla.
                 engine (object): Obligatorio.
                     Objeto con el motor de redshift.
                 
@@ -161,9 +162,10 @@ class Redshift_Handler():
         
         table_name = "articles"
         schema = os.environ["REDSHIFT_USER"]
-        df_columns_list = df.columns.tolist()
         count_rows = 0
         exist_rows = 0
+        df = pd.read_csv(file_name)
+        df_columns_list = df.columns.tolist()
         
         insert_query ="insert into {}.{} ( {} ) values  %s  ".format(schema, 
                                                                      table_name, 
@@ -176,10 +178,14 @@ class Redshift_Handler():
             with engine.connect() as conection:
                 
                 cursor = conection.connection.cursor()
-                print(cursor)
+
                 if conection.dialect.has_table(conection, table_name): 
                     
                     print("Consultando la existencia de articulos en Redshift...")
+                    
+                    df["publishedAt"] =pd.to_datetime(df["publishedAt"])
+                    df.replace(np.nan, None)
+                    
                     for i ,row in df.iterrows():
                         
                         result = self.run_script_sql("is-Exist-Record","beforeQuery.sql", conection, data=row.to_dict())

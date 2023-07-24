@@ -1,5 +1,6 @@
 import requests as r
 import pandas as pd
+import json
 
 
 class Articles():
@@ -54,7 +55,7 @@ class Articles():
         return result
 
 
-    def normalize_data(self, data: dict):
+    def normalize_data(self, data_path: str):
 
         """
             Funcion que aplica el tratamiento corresponde en la informacion y 
@@ -62,19 +63,21 @@ class Articles():
 
         Parameters
         ----------
-            data (list), Obligatorio.
-                Lista de los articulos encontrados por la api.
+            data_path (str), Obligatorio.
+                Directorio del archivo en formato json con los articulos encontrados por la api.
 
         Returns
         -------
             df:  Contenido los datos normalizados en dataframe
         """
 
-        if data: 
+        if data_path: 
             
             print("Aplicando transformaciones y ajustes...")
-            
-            temp = pd.DataFrame(data["result"])
+            file = open(data_path, "r")
+            raw_data = json.loads(file.read()) 
+            file.close()     
+            temp = pd.DataFrame(raw_data["result"])
             df_sourse = temp.from_records(temp["source"])
             temp["publishedAt"] = temp["publishedAt"].apply(lambda x : x.rsplit('T', 1)[0]) 
             temp.insert(0,"id", temp.reset_index().index +1)

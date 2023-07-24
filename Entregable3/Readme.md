@@ -1,5 +1,15 @@
 # Tercer Entregable
 
+# Actualización:
+Se Aplicaron los cambios de la devolución:
+
+-Se modifico la logica de los task para guardar la informacion procesaba en archivos en formato json y csv.
+
+- Se Refactorizaron los task para pasar la ruta y el nombre del archivo con la informacion de los articulos.
+
+- Se creo una nueva task para limpiar el directorio de los archivos posteriormente procedados para un mejor uso de la memoria.
+
+
 Se uso la api newsapi.org como requerimiento para desarrollo del entregable. 
 A continuacion esta el enlace de la pagina:
 
@@ -20,7 +30,7 @@ Una vez clonado el repositorio, se debe tener en cuenta lo siguiente:
 * Crear las siguientes carpetas a la misma altura del `docker-compose.yaml`.
 
 ```bash
-mkdir -p dags,logs,plugins
+mkdir -p dags,logs,plugins,data
 ```
 * Ejecutar el siguiente comando para levantar los servicios de Airflow.
 
